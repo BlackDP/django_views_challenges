@@ -39,6 +39,12 @@ def process_authorization_view(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         # код писать тут
+        print(data)
+        login = data.get('username')
+        pwd = data.get('password')
+        if login in USERNAME_TO_PASSWORD_MAPPER and USERNAME_TO_PASSWORD_MAPPER.get(login) == pwd:
+            return JsonResponse(data={}, status=200)
+        return JsonResponse(data={}, status=403)
     else:
         return HttpResponseNotAllowed(permitted_methods=['POST'])
 
